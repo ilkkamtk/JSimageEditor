@@ -63,7 +63,7 @@ var rgb = function() {
 
 var autoContrast = function() {
     /* Automaattinen kontrasti:
-    Po = (P - mi)/(ma - mi)  * 255
+    Po = (P - mi)/(ma - mi) * 255
     P = Pikselin arvo
     mi = minimi
     ma = maksimi
