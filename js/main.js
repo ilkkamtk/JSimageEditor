@@ -40,5 +40,13 @@ var rgb = function() {
 
 var addRed = document.querySelector('#addRed');
 var addGreen = document.querySelector('#addGreen');
+var addBlue = document.querySelector('#addBlue');
+var lessRed = document.querySelector('#lessRed');
+var lessGreen = document.querySelector('#lessGreen');
+var lessBlue = document.querySelector('#lessBlue');
 addRed.addEventListener('click', rgb);
 addGreen.addEventListener('click', rgb);
+addBlue.addEventListener('click', rgb);
+lessRed.addEventListener('click', rgb);
+lessGreen.addEventListener('click', rgb);
+lessBlue.addEventListener('click', rgb);
