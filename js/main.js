@@ -10,8 +10,9 @@ var addBlue = document.querySelector('#addBlue');
 var lessRed = document.querySelector('#lessRed');
 var lessGreen = document.querySelector('#lessGreen');
 var lessBlue = document.querySelector('#lessBlue');
+var autoC = document.querySelector('#autoContrast');
 var image = new Image();
-image.src = "img/teht_a.jpg";
+image.src = "img/lowc.jpg";
 
 // funktiot
 var getMaxMin = function(array) {
@@ -62,7 +63,7 @@ var rgb = function() {
 
 var autoContrast = function() {
     /* Automaattinen kontrasti:
-    Po = (P/mi)/(ma/mi)
+    Po = (P - mi)/(ma - mi)  * 255
     P = Pikselin arvo
     mi = minimi
     ma = maksimi
@@ -78,6 +79,18 @@ var autoContrast = function() {
     };
 
     var maxMinR = getMaxMin(rArray);
+    var maxMinG = getMaxMin(gArray);
+    var maxMinB = getMaxMin(bArray);
+
+    console.log(maxMinB);
+
+    for (var i = 0; i < numPixels; i++) {
+        pixels[i * 4] = ((pixels[i * 4] - maxMinR.min) / (maxMinR.max - maxMinR.min)) * 255; // Red
+        pixels[i * 4 + 1] = ((pixels[i * 4 + 1] - maxMinG.min) / (maxMinG.max - maxMinG.min)) * 255; // Green
+        pixels[i * 4 + 2] = ((pixels[i * 4 + 2] - maxMinB.min) / (maxMinB.max - maxMinB.min)) * 255; // Blue
+    };
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.putImageData(imageData, 0, 0);
 
 }
 
@@ -90,3 +103,4 @@ addBlue.addEventListener('click', rgb);
 lessRed.addEventListener('click', rgb);
 lessGreen.addEventListener('click', rgb);
 lessBlue.addEventListener('click', rgb);
+autoC.addEventListener('click', autoContrast);
