@@ -17,11 +17,12 @@
 
 <body class="secondary-color">
     <header>
-        <img src="http://placekitten.com/100/100" alt="logo">
+        <img src="http://placekitten.com/201/100" alt="logo">
         <h1>Example</h1>
     </header>
 
     <section class="primary-color left">
+        <input type="file" name="file">
         <div>
             <canvas>
                 <!-- Kuva ilmestyy tänne -->
@@ -40,6 +41,12 @@
         <button id="addBlue" value="5">+</button><button id="lessBlue" value="-5">-</button>
         <hr>
         <button id="autoContrast">Autokontrasti</button>
+        <hr>
+        <label>Kirkkaus
+        <input type="range" name="kirkkaus" min="-255" max="255" value="0" step="1"></label>
+        <br>
+        <label>Kontrasti
+        <input type="range" name="kontrasti" min="0" max="10" value="1" step="0.1"></label>
     </section>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

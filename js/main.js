@@ -11,10 +11,24 @@ var lessRed = document.querySelector('#lessRed');
 var lessGreen = document.querySelector('#lessGreen');
 var lessBlue = document.querySelector('#lessBlue');
 var autoC = document.querySelector('#autoContrast');
+var bright = document.querySelector('input[name=kirkkaus]');
+bright.value = 0;
+var contrast = document.querySelector('input[name=kontrasti]');
+contrast.value = 1;
+var fileInput = document.querySelector('input[type=file]');
+
 var image = new Image();
-image.src = "img/lowc.jpg";
+// image.src = "img/lowc.jpg";
 
 // funktiot
+var lataaKuva = function() {
+    var reader = new FileReader();
+    reader.addEventListener('load', function(evt) {
+        image.src = this.result;
+    });
+    reader.readAsDataURL(this.files[0]);
+}
+
 var getMaxMin = function(array) {
     var values = {};
     var normalArray = Array.prototype.slice.call(array);
@@ -94,6 +108,29 @@ var autoContrast = function() {
 
 }
 
+var brightContrast = function() {
+    /* Vaaleus/kontrasti:
+    Po = (P - 128) * K + 128 + L
+    P = pikselin arvo
+    K = kontrasti (0-1 vähentää, 1-10 lisää)
+    L = Vaalennus/tummennus (-255 - 255)
+    */
+    resetCanvas();
+
+    var k = parseInt(contrast.value);
+    var l = parseInt(bright.value);
+
+    console.log((pixels[6 * 4] - 128) * k + 128 + l);
+
+    for (var i = 0; i < numPixels; i++) {
+        pixels[i * 4] = (pixels[i * 4] - 128) * k + 128 + l; // Red
+        pixels[i * 4 + 1] = (pixels[i * 4 + 1] - 128) * k + 128 + l; // Green
+        pixels[i * 4 + 2] = (pixels[i * 4 + 2] - 128) * k + 128 + l; // Blue
+    };
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.putImageData(imageData, 0, 0);
+
+}
 
 // tapahtumakuuntelijat
 image.addEventListener('load', resetCanvas);
@@ -104,3 +141,6 @@ lessRed.addEventListener('click', rgb);
 lessGreen.addEventListener('click', rgb);
 lessBlue.addEventListener('click', rgb);
 autoC.addEventListener('click', autoContrast);
+bright.addEventListener('change', brightContrast);
+contrast.addEventListener('change', brightContrast);
+fileInput.addEventListener('change', lataaKuva);
